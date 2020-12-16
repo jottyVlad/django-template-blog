@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List of posts</title>
+</head>
+<body>
+    {% for post in object_list %}
+    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+    <p>{{ post.content }}</p>
+    <p>{{ post.created_at }}</p>
+    <p>{{ post.updated_at }}</p>
+    <hr>
+    {% endfor %}
+</body>
+</html>
