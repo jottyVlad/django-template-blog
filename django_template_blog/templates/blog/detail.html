@@ -1,17 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends 'base.html' %}
+
+{% block head %}
     <title>{{ post.title }}</title>
-</head>
-<body>
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content }}</p>
-    <p>Created: {{ post.created_at }}</p>
-    <p>Updated: {{ post.updated_at }}</p>
-    <p>Author: {{ post.author }}</p>
-</body>
-</html>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="display-3 mt-3">{{ post.title }}</h1>
+        <p class="lead mt-3">{{ post.content }}</p>
+        <p class="lead mt-3 text-end">Author: {{ post.author }}</p>
+        <p class="lead mt-3">Created: {{ post.created_at }}</p>
+        <p class="lead mt-3">Updated: {{ post.updated_at }}</p>
+    </div>
+{% endblock %}
