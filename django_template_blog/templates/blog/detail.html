@@ -11,5 +11,24 @@
         <p class="lead mt-3 text-end">Author: {{ post.author }}</p>
         <p class="lead mt-3">Created: {{ post.created_at }}</p>
         <p class="lead mt-3">Updated: {{ post.updated_at }}</p>
+
+        {% if is_authed %}
+        <div class="create-comment">
+            <form method="post">
+                {% csrf_token %}
+                <textarea name="text" class="form-control"></textarea>
+                <input type="submit" value="Создать комментарий!" class="btn btn-primary mt-4">
+            </form>
+        </div>
+        {% endif %}
+        <div class="comments mt-5">
+            {% for comment in comments %}
+                <div class="comment alert alert-primary mt-5" role="alert">
+                        <p class="lead" style="font-size: 20px">{{ comment.author }}</p>
+                        <p class="lead" style="font-size: 20px">{{ comment.text }}</p>
+                        <p class="lead" style="font-size: 20px">{{ comment.created_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

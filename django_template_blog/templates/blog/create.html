@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <title>Create new post</title>
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create post">
+        </form>
+    </div>
+{% endblock %}
