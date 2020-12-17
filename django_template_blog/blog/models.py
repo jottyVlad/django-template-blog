@@ -16,7 +16,11 @@ class Post(models.Model):
 
     is_published = models.BooleanField(default=False)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, unique=False)
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        unique=False
+    )
 
     class Meta:
         verbose_name = "Пост"
@@ -26,5 +30,5 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return f"/posts/{self.id}"
+        return f"/{self.id}"
 
