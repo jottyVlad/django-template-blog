@@ -11,7 +11,30 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">
-        <a href="{% url 'blog:list' %}" class="navbar-brand">Posts</a>
+        <div class="collapse navbar-collapse d-flex" id="navbarSupportedContent">
+            <a href="{% url 'blog:list' %}" class="navbar-brand d-flex flex-row">Jotty >< SITE!</a>
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link px-4" href="{% url 'blog:list' %}">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav mr-auto d-flex w-100" style="flex-direction: row-reverse">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item active"><span class="nav-link px-4">{{ request.user.username }}</span></li>
+                    <li class="nav-item active">
+                        <a href="{% url 'accounts:logout' %}" class="nav-link">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a href="{% url 'accounts:login' %}" class="nav-link px-4">Sign in</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="{% url 'blog:signup' %}" class="nav-link">Sign up</a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
     </nav>
     {% block content %}
     {% endblock %}

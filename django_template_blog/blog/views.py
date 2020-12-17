@@ -1,3 +1,5 @@
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, FormView
 
@@ -47,3 +49,25 @@ class CreatePostView(FormView):
         post.is_published = True
         post.save()
         return super().form_valid(form)
+
+
+class RegistrationFormView(FormView):
+
+    template_name = 'blog/signup.html'
+    form_class = UserCreationForm
+    success_url = '/'
+
+    def get(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect('blog:list')
+        else:
+            return super().get(request, *args, **kwargs)
+
+
+    def form_valid(self, form):
+        form.save()
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password1')
+        user = authenticate(username=username, password=password)
+        login(self.request, user)
+        return redirect('blog:list')
