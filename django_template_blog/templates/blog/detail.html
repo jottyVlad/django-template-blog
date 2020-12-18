@@ -16,7 +16,9 @@
         <div class="create-comment">
             <form method="post">
                 {% csrf_token %}
-                <textarea name="text" class="form-control"></textarea>
+                {% for field in form %}
+                    {{ field }}
+                {% endfor %}
                 <input type="submit" value="Создать комментарий!" class="btn btn-primary mt-4">
             </form>
         </div>
