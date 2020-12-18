@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block head %}
     <title>{{ post.title }}</title>
 {% endblock %}
@@ -11,6 +13,10 @@
         <p class="lead mt-3 text-end">Author: {{ post.author }}</p>
         <p class="lead mt-3">Created: {{ post.created_at }}</p>
         <p class="lead mt-3">Updated: {{ post.updated_at }}</p>
+        <div class="d-flex align-items-center" style="width: 7%; justify-content: space-around">
+            <img src="{% static 'view.svg' %}" alt="View image" style="width: 34%">
+            <span style="font-size: 20px">{{ post.views }}</span>
+        </div>
 
         <hr>
 

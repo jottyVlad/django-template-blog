@@ -13,6 +13,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    views = models.IntegerField(default=0)
+
     is_published = models.BooleanField(default=False)
 
     author = models.ForeignKey(

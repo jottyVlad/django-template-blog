@@ -35,6 +35,12 @@ class DetailPost(FormMixin, DetailView):
         data['form'] = self.get_form()
         return data
 
+    def get(self, request, *args, **kwargs):
+        post_object = self.get_object()
+        post_object.views += 1
+        post_object.save()
+        return super().get(request, *args, **kwargs)
+
     def post(self, request, *args, **kwargs):
 
         form = self.get_form()
@@ -49,9 +55,13 @@ class DetailPost(FormMixin, DetailView):
 
         text = form.cleaned_data.get('text')
         comment = Comment(author=self.request.user,
-                          post=Post.objects.get(id=self.kwargs['pk']),
+                          post=self.get_object(),
                           text=text)
         comment.save()
+        post_object = self.get_object()
+        post_object.views -= 1
+        post_object.save()
+
         return redirect('blog:detail', self.kwargs['pk'])
 
 
