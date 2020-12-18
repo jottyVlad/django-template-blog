@@ -9,6 +9,7 @@ from .models import Post, Comment
 
 
 class ListPost(ListView):
+    paginate_by = 5
     template_name = "blog/list.html"
 
     model = Post
