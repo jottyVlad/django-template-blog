@@ -12,6 +12,8 @@
         <p class="lead mt-3">Created: {{ post.created_at }}</p>
         <p class="lead mt-3">Updated: {{ post.updated_at }}</p>
 
+        <hr>
+
         {% if is_authed %}
         <div class="create-comment">
             <form method="post">
@@ -19,7 +21,7 @@
                 {% for field in form %}
                     {{ field }}
                 {% endfor %}
-                <input type="submit" value="Создать комментарий!" class="btn btn-primary mt-4">
+                <input type="submit" value="Создать комментарий!" class="btn btn-primary mt-2">
             </form>
         </div>
         {% endif %}

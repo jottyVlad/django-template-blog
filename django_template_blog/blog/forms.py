@@ -23,6 +23,8 @@ class CreateComment(forms.ModelForm):
 
         for visible in self.visible_fields():
             visible.field.widget.attrs['class'] = 'form-control'
+            visible.field.widget.attrs['rows'] = '1'
+            visible.field.widget.attrs['style'] = 'resize: vertical'
 
     class Meta:
         model = Comment

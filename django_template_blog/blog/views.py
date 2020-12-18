@@ -63,6 +63,7 @@ class CreatePostView(FormView):
     def form_valid(self, form):
         post = form.save()
         post.is_published = True
+        post.author = self.request.user
         post.save()
         return super().form_valid(form)
 
