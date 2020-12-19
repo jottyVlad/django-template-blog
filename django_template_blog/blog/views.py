@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, FormView
-from django.views.generic.edit import FormMixin
+from django.views.generic import ListView, DetailView, FormView, UpdateView
+from django.views.generic.edit import FormMixin, DeleteView
 
 from .forms import CreatePostForm, CreateComment
 from .models import Post, Comment
@@ -19,14 +19,13 @@ class ListPost(ListView):
 
 
 class DetailPost(FormMixin, DetailView):
-
     template_name = "blog/detail.html"
     model = Post
     form_class = CreateComment
 
     def get_queryset(self):
         return super(DetailPost, self).get_queryset().filter(is_published=True)
-    
+
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         data['comments'] = Comment.objects.filter(post=kwargs['object'].id).order_by('-created_at')
@@ -78,8 +77,33 @@ class CreatePostView(FormView):
         return super().form_valid(form)
 
 
-class RegistrationFormView(FormView):
+class UpdatePostView(UpdateView):
+    model = Post
+    template_name = 'blog/update.html'
+    fields = ['title', 'content', ]
+    template_name_suffix = '_update_post_form'
 
+    def get(self, *args, **kwargs):
+        if (self.request.user != (self.get_object()).author) and (not self.request.user.is_superuser):
+            return redirect('blog:detail', self.kwargs['pk'])
+
+        return super().get(*args, **kwargs)
+
+
+class DeletePostView(DeleteView):
+    model = Post
+    template_name = 'blog/delete.html'
+    success_url = '/all'
+
+    def get(self, *args, **kwargs):
+        print(self.request.user != self.get_object().author)
+        if (self.request.user != (self.get_object()).author) and (not self.request.user.is_superuser):
+            return redirect('blog:detail', self.kwargs['pk'])
+
+        return super().get(*args, **kwargs)
+
+
+class RegistrationFormView(FormView):
     template_name = 'blog/signup.html'
     form_class = UserCreationForm
     success_url = '/'
@@ -89,7 +113,6 @@ class RegistrationFormView(FormView):
             return redirect('blog:list')
         else:
             return super().get(request, *args, **kwargs)
-
 
     def form_valid(self, form):
         form.save()
