@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="content mt-5">
+    <div class="container mt-5">
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}

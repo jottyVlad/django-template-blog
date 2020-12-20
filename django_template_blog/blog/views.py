@@ -80,8 +80,9 @@ class CreatePostView(FormView):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'blog/update.html'
-    fields = ['title', 'content', ]
+    #fields = ['title', 'content', ]
     template_name_suffix = '_update_post_form'
+    form_class = CreatePostForm
 
     def get(self, *args, **kwargs):
         if (self.request.user != (self.get_object()).author) and (not self.request.user.is_superuser):
