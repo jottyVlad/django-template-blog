@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
 
 
 class Post(models.Model):
@@ -8,7 +10,7 @@ class Post(models.Model):
         max_length=255, default="Default title"
     )
 
-    content = models.TextField(default="Default content")
+    content = MarkdownxField(default="Default content")
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -34,6 +36,12 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f"/{self.id}"
+
+    def formatted_markdown(self):
+        return markdownify(self.content)
+
+    def body_summary(self):
+        return markdownify(self.content[:300] + '...')
 
 
 class Comment(models.Model):

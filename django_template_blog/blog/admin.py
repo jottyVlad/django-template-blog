@@ -1,11 +1,9 @@
 from django.contrib import admin
+from markdownx.admin import MarkdownxModelAdmin
+
 from .models import Post, Comment
 
-
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
-    pass
-
+admin.site.register(Post, MarkdownxModelAdmin)
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):

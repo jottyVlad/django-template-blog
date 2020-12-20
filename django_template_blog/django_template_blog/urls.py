@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('blog.urls', 'blog'), namespace="blog")),
     path('accounts/', include(('django.contrib.auth.urls', 'accounts'), namespace="accounts")),
+    path('markdownx/', include('markdownx.urls')),
 ]

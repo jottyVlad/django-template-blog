@@ -15,7 +15,7 @@ class ListPost(ListView):
     model = Post
 
     def get_queryset(self):
-        return super(ListPost, self).get_queryset().filter(is_published=True)
+        return super(ListPost, self).get_queryset().filter(is_published=True).order_by('-created_at')
 
 
 class DetailPost(FormMixin, DetailView):
