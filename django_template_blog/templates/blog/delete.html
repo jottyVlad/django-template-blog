@@ -6,6 +6,7 @@
 
 {% block content %}
     <div class="container mt-5">
+        <h6 class="display-6 mb-4">Are you sure for deleting post with ID {{ post.id }}?</h6>
         <form method="post">
             {% csrf_token %}
             <input type="submit" value="Delete post!" class="btn btn-danger">

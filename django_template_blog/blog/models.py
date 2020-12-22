@@ -37,6 +37,12 @@ class Post(models.Model):
     def get_absolute_url(self):
         return f"/{self.id}"
 
+    def get_update_url(self):
+        return f"/{self.id}/update"
+
+    def get_delete_url(self):
+        return f"/{self.id}/delete"
+
     def formatted_markdown(self):
         return markdownify(self.content)
 

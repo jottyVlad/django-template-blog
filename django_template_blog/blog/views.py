@@ -30,6 +30,10 @@ class DetailPost(FormMixin, DetailView):
         data = super().get_context_data(**kwargs)
         data['comments'] = Comment.objects.filter(post=kwargs['object'].id).order_by('-created_at')
         data['is_authed'] = self.request.user.is_authenticated
+        if (self.request.user == (self.get_object()).author) or self.request.user.is_superuser:
+            data['is_access'] = True
+        else:
+            data['is_access'] = False
 
         data['form'] = self.get_form()
         return data
@@ -80,7 +84,6 @@ class CreatePostView(FormView):
 class UpdatePostView(UpdateView):
     model = Post
     template_name = 'blog/update.html'
-    #fields = ['title', 'content', ]
     template_name_suffix = '_update_post_form'
     form_class = CreatePostForm
 

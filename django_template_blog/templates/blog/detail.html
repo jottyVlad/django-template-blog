@@ -19,6 +19,12 @@
             <span style="font-size: 20px">{{ post.views }}</span>
         </div>
 
+        {% if is_access %}
+        <div class="pt-3">
+            <a href="{{ post.get_update_url }}" class="btn btn-primary mx-2 px-4">Update</a>
+            <a href="{{ post.get_delete_url }}" class="btn btn-danger mx-2 px-4">Delete</a>
+        </div>
+        {% endif %}
         <hr>
 
         {% if is_authed %}
@@ -28,7 +34,7 @@
                 {% for field in form %}
                     {{ field }}
                 {% endfor %}
-                <input type="submit" value="Создать комментарий!" class="btn btn-primary mt-2">
+                <input type="submit" value="Create comment!" class="btn btn-primary mt-2">
             </form>
         </div>
         {% endif %}
