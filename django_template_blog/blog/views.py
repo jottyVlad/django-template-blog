@@ -15,7 +15,10 @@ class ListPost(ListView):
     model = Post
 
     def get_queryset(self):
-        return super(ListPost, self).get_queryset().filter(is_published=True).order_by('-created_at')
+        if not self.request.user.is_superuser:
+            return super(ListPost, self).get_queryset().filter(is_published=True).order_by('-created_at')
+        else:
+            return super(ListPost, self).get_queryset().order_by('-created_at')
 
 
 class DetailPost(FormMixin, DetailView):
@@ -24,7 +27,10 @@ class DetailPost(FormMixin, DetailView):
     form_class = CreateComment
 
     def get_queryset(self):
-        return super(DetailPost, self).get_queryset().filter(is_published=True)
+        if not self.request.user.is_superuser:
+            return super(DetailPost, self).get_queryset().filter(is_published=True)
+        else:
+            return super(DetailPost, self).get_queryset()
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)

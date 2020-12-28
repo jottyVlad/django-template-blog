@@ -11,6 +11,7 @@
         <h1 class="display-3 mt-3">{{ post.title }}</h1>
         <hr>
         <p class="lead mt-3">{{ post.formatted_markdown|safe }}</p>
+        <p class="lead mt-4">{{ post.category.get_post_categories }}</p>
         <p class="lead mt-3 text-end">Author: {{ post.author }}</p>
         <p class="lead mt-3">Created: {{ post.created_at }}</p>
         <p class="lead mt-3">Updated: {{ post.updated_at }}</p>

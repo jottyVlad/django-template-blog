@@ -5,7 +5,6 @@ from markdownx.utils import markdownify
 
 
 class Post(models.Model):
-
     title = models.CharField(
         max_length=255, default="Default title"
     )
@@ -26,6 +25,8 @@ class Post(models.Model):
         null=True,
         default=None
     )
+
+    category = models.ForeignKey('Category', default=None, null=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "Пост"
@@ -62,3 +63,26 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.post.title
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=128)
+    category_rev = models.ForeignKey('self', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+
+    def __str__(self):
+        return self.name
+
+    def get_post_categories(self, arr=None):
+        if arr is None:
+            arr = [self]
+
+        if arr[-1].category_rev is not None:
+            arr.append(arr[-1].category_rev)
+            return self.get_post_categories(arr)
+
+        list_categoris_str = ' >> '.join(list(map(str, arr[::-1])))
+        return list_categoris_str
